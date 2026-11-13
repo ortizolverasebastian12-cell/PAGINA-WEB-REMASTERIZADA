@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NekoWeb Studio 🐾 — Mi Portal Gatuno Interactivo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-cream: #fff9f2;
+      --bg-gradient: linear-gradient(135deg, #fff5eb 0%, #ffe8f0 50%, #e6f7ed 100%);
+      --card-bg: rgba(255, 255, 255, 0.92);
+      --pink-cute: #ff7aa2;
+      --pink-soft: #ffe3ec;
+      --peach: #ff9f68;
+      --mint: #5ec28d;
+      --mint-soft: #e3f8ec;
+      --lavender: #9b87f5;
+      --text-main: #4a3b47;
+      --text-muted: #7a6876;
+      --border-cute: #ffd1df;
+      --shadow-cute: 0 10px 25px rgba(255, 122, 162, 0.16);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+      padding-bottom: 50px;
+    }
+
+    /* Fondo animado con huellitas y corazones flotantes */
+    .floating-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .floater {
+      position: absolute;
+      font-size: 1.5rem;
+      opacity: 0.25;
+      animation: floatUp linear infinite;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(105vh) rotate(0deg); opacity: 0; }
+      15% { opacity: 0.3; }
+      85% { opacity: 0.3; }
+      100% { transform: translateY(-10vh) rotate(25deg); opacity: 0; }
+    }
+
+    /* Encabezado Alegre con Gatito Interactivo */
+    header.hero {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 2.5rem 1rem 1.8rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .cat-mascot-box {
+      width: 150px;
+      height: 120px;
+      margin: 0 auto 0.5rem;
+      cursor: pointer;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+    }
+
+    .cat-mascot-box:hover {
+      transform: scale(1.08) rotate(-3deg);
+    }
+
+    .cat-mascot-box:active {
+      transform: scale(0.95);
+    }
+
+    .cat-tail {
+      transform-origin: 122px 88px;
+      animation: wagTail 2s ease-in-out infinite alternate;
+    }
+
+    .cat-eye {
+      transform-origin: center;
+      animation: blinkEye 4s infinite;
+    }
+
+    @keyframes wagTail {
+      0% { transform: rotate(-10deg); }
+      100% { transform: rotate(16deg); }
+    }
+
+    @keyframes blinkEye {
+      0%, 92%, 100% { transform: scaleY(1); }
+      95% { transform: scaleY(0.1); }
+    }
+
+    .meow-bubble {
+      position: absolute;
+      top: 0;
+      right: -25px;
+      background: #fff;
+      border: 2px solid var(--pink-cute);
+      color: var(--pink-cute);
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+
+    .meow-bubble.show {
+      opacity: 1;
+      transform: translateY(-5px);
+    }
+
+    header h1 {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(2rem, 4.5vw, 3rem);
+      color: var(--pink-cute);
+      text-shadow: 2px 2px 0px #fff;
+      margin-bottom: 0.4rem;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-weight: 700;
+      font-size: 1.05rem;
+      max-width: 680px;
+      margin: 0 auto 1.2rem;
+    }
+
+    /* Barra de Navegación Principal */
+    nav.main-nav {
+      position: relative;
+      z-index: 2;
+      max-width: 1080px;
+      margin: 0 auto 2rem;
+      padding: 12px 18px;
+      background: var(--card-bg);
+      border: 3px solid var(--border-cute);
+      border-radius: 35px;
+      box-shadow: var(--shadow-cute);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .nav-btn {
+      border: 2px solid transparent;
+      background: var(--pink-soft);
+      color: var(--text-main);
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 700;
+      font-size: 0.92rem;
+      padding: 9px 16px;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-btn:hover {
+      background: var(--pink-cute);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    .nav-btn.active {
+      background: linear-gradient(135deg, var(--pink-cute), var(--peach));
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(255, 122, 162, 0.35);
+    }
+
+    .nav-btn.js-tab {
+      background: var(--mint-soft);
+      color: #2d6a4f;
+    }
+
+    .nav-btn.js-tab:hover,
+    .nav-btn.js-tab.active {
+      background: linear-gradient(135deg, var(--mint), #40916c);
+      color: #fff;
+    }
+
+    /* Contenedor de Secciones */
+    .container {
+      position: relative;
+      z-index: 2;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    .tab-section {
+      display: none;
+      background: var(--card-bg);
+      border: 3px solid var(--border-cute);
+      border-radius: 30px;
+      padding: 35px;
+      box-shadow: var(--shadow-cute);
+      animation: popIn 0.35s ease;
+    }
+
+    .tab-section.active {
+      display: block;
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.98) translateY(10px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .section-title {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 2rem;
+      color: var(--pink-cute);
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      color: var(--text-muted);
+      font-weight: 700;
+      margin-bottom: 24px;
+      font-size: 1.05rem;
+    }
+
+    /* Imágenes tiernas */
+    .img-box {
+      display: flex;
+      justify-content: center;
+      margin: 20px 0;
+    }
+
+    .cat-photo {
+      max-width: 100%;
+      max-height: 320px;
+      border-radius: 24px;
+      border: 5px solid var(--pink-soft);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .cat-photo:hover {
+      transform: scale(1.03) rotate(1.5deg);
+    }
+
+    /* Botones y Grupos de Enlaces */
+    .btn-cute {
+      background: linear-gradient(135deg, var(--pink-cute), var(--peach));
+      color: white;
+      border: none;
+      padding: 12px 26px;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.05rem;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(255, 122, 162, 0.35);
+      transition: all 0.25s ease;
+    }
+
+    .btn-cute:hover {
+      transform: translateY(-2px) scale(1.02);
+      filter: brightness(1.05);
+    }
+
+    .link-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 24px;
+    }
+
+    .link-pill {
+      background: var(--mint-soft);
+      color: #2d6a4f;
+      border: 2px solid #b7e4c7;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .link-pill:hover {
+      background: var(--mint);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    /* Multimedia */
+    .media-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      margin: 20px 0;
+    }
+
+    video {
+      width: 100%;
+      max-width: 560px;
+      border-radius: 22px;
+      border: 4px solid var(--pink-soft);
+      background: #000;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    audio {
+      width: 100%;
+      max-width: 500px;
+      border-radius: 30px;
+    }
+
+    .explanation-box {
+      background: var(--mint-soft);
+      border: 2px dashed var(--mint);
+      border-radius: 20px;
+      padding: 20px;
+      margin-top: 22px;
+    }
+
+    .explanation-box h3 {
+      font-family: 'Fredoka', sans-serif;
+      color: #2d6a4f;
+      margin-bottom: 10px;
+    }
+
+    .explanation-box ul {
+      margin-left: 22px;
+      color: #3a5a40;
+      font-weight: 600;
+    }
+
+    .explanation-box li {
+      margin-bottom: 8px;
+    }
+
+    code {
+      background: #fff;
+      color: #d6336c;
+      padding: 2px 7px;
+      border-radius: 6px;
+      font-family: 'Consolas', monospace;
+      font-weight: bold;
+    }
+
+    /* Glosario de Etiquetas */
+    .search-tags {
+      width: 100%;
+      max-width: 450px;
+      display: block;
+      margin: 0 auto 18px;
+      padding: 11px 18px;
+      border-radius: 25px;
+      border: 2px solid var(--border-cute);
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    .search-tags:focus {
+      border-color: var(--pink-cute);
+    }
+
+    .tags-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+      max-height: 480px;
+      overflow-y: auto;
+      padding: 12px;
+      background: #fffafc;
+      border: 2px solid var(--border-cute);
+      border-radius: 20px;
+    }
+
+    .tag-card {
+      background: #fff;
+      border: 1.5px solid var(--pink-soft);
+      border-radius: 14px;
+      padding: 12px 14px;
+      transition: transform 0.2s;
+    }
+
+    .tag-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--pink-cute);
+    }
+
+    .tag-card p {
+      font-size: 0.9rem;
+      margin-top: 5px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    /* Lista de Meses */
+    .months-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 14px;
+      margin-top: 15px;
+    }
+
+    .months-list li {
+      background: linear-gradient(135deg, #fff, var(--pink-soft));
+      border: 2px solid var(--border-cute);
+      padding: 16px;
+      border-radius: 18px;
+      text-align: center;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.1rem;
+      color: var(--text-main);
+      transition: all 0.25s ease;
+    }
+
+    .months-list li:hover {
+      background: linear-gradient(135deg, var(--pink-cute), var(--peach));
+      color: white;
+      transform: translateY(-4px) scale(1.03);
+    }
+
+    /* Tabla Horario Escolar */
+    .table-responsive {
+      overflow-x: auto;
+      border-radius: 20px;
+      border: 2px solid var(--border-cute);
+      margin-top: 15px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      text-align: center;
+      font-size: 0.88rem;
+    }
+
+    th, td {
+      padding: 12px 8px;
+      border: 1.5px solid var(--pink-soft);
+    }
+
+    th {
+      background: linear-gradient(135deg, var(--pink-cute), var(--peach));
+      color: white;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 0.95rem;
+    }
+
+    td {
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    tr:nth-child(even) td {
+      background: #fff9fb;
+    }
+
+    /* Grid de los 10 Programas JS */
+    .js-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 18px;
+      margin-top: 15px;
+    }
+
+    .js-card {
+      background: #fff;
+      border: 2px solid #b7e4c7;
+      border-radius: 22px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 6px 16px rgba(94, 194, 141, 0.12);
+      transition: transform 0.25s ease;
+    }
+
+    .js-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--mint);
+    }
+
+    .js-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px dashed var(--mint-soft);
+      padding-bottom: 8px;
+      margin-bottom: 10px;
+    }
+
+    .js-card-header h3 {
+      font-family: 'Consolas', monospace;
+      color: #2d6a4f;
+      font-size: 1.1rem;
+    }
+
+    .js-desc {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .js-output {
+      background: #f4fbf7;
+      border: 2px dashed #95d5b2;
+      border-radius: 14px;
+      padding: 12px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #1b4332;
+      min-height: 62px;
+      white-space: pre-line;
+      margin-bottom: 14px;
+    }
+
+    .btn-js {
+      width: 100%;
+      background: linear-gradient(135deg, var(--mint), #40916c);
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 14px;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 0.98rem;
+      cursor: pointer;
+      transition: filter 0.2s, transform 0.15s;
+    }
+
+    .btn-js:hover {
+      filter: brightness(1.07);
+    }
+
+    .btn-js:active {
+      transform: scale(0.98);
+    }
+
+    footer {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      margin-top: 35px;
+      color: var(--text-muted);
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Fondo con huellitas y corazones flotantes -->
+  <div class="floating-bg" id="floatingBg"></div>
+
+  <!-- Encabezado con Gatito Mascota Interactivo -->
+  <header class="hero">
+    <div class="cat-mascot-box" onclick="acariciarGato()" title="¡Haz clic para acariciar al michi!">
+      <div class="meow-bubble" id="meowBubble">¡Miau! Purrr 💕</div>
+      <svg viewBox="0 0 180 130" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Cola -->
+        <path class="cat-tail" d="M122 88 C148 85, 162 60, 152 42 C147 33, 138 38, 142 48 C147 60, 138 74, 120 78" stroke="#ff9f68" stroke-width="8" stroke-linecap="round"/>
+        <!-- Cuerpo -->
+        <ellipse cx="90" cy="85" rx="34" ry="26" fill="#fff" stroke="#ff7aa2" stroke-width="3"/>
+        <!-- Cabeza -->
+        <circle cx="90" cy="48" r="25" fill="#fff" stroke="#ff7aa2" stroke-width="3"/>
+        <!-- Orejas -->
+        <polygon points="68,34 63,11 83,26" fill="#fff" stroke="#ff7aa2" stroke-width="3" stroke-linejoin="round"/>
+        <polygon points="71,31 68,17 80,26" fill="#ffb3c6"/>
+        <polygon points="112,34 117,11 97,26" fill="#fff" stroke="#ff7aa2" stroke-width="3" stroke-linejoin="round"/>
+        <polygon points="109,31 112,17 100,26" fill="#ffb3c6"/>
+        <!-- Ojos tiernos -->
+        <circle class="cat-eye" cx="80" cy="47" r="4.2" fill="#4a3b47"/>
+        <circle cx="78.8" cy="45.5" r="1.4" fill="#fff"/>
+        <circle class="cat-eye" cx="100" cy="47" r="4.2" fill="#4a3b47"/>
+        <circle cx="98.8" cy="45.5" r="1.4" fill="#fff"/>
+        <!-- Mejillas sonrojadas -->
+        <ellipse cx="72" cy="53" rx="4.5" ry="2.5" fill="#ffb3c6"/>
+        <ellipse cx="108" cy="53" rx="4.5" ry="2.5" fill="#ffb3c6"/>
+        <!-- Nariz y boquita -->
+        <polygon points="88,53 92,53 90,56" fill="#ff7aa2"/>
+        <path d="M85 57 Q88 60 90 56 Q92 60 95 57" stroke="#4a3b47" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+        <!-- Bigotes -->
+        <line x1="58" y1="50" x2="71" y2="52" stroke="#ff7aa2" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="58" y1="56" x2="71" y2="56" stroke="#ff7aa2" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="122" y1="50" x2="109" y2="52" stroke="#ff7aa2" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="122" y1="56" x2="109" y2="56" stroke="#ff7aa2" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <h1>NekoWeb Studio 🐾</h1>
+    <p>¡Todo mi mundo HTML5 y mis 10 programas de JavaScript reunidos en un solo rincón gatuno! (Haz clic en el michi de arriba)</p>
+  </header>
+
+  <!-- Navegación Unificada -->
+  <nav class="main-nav">
+    <button class="nav-btn active" onclick="openTab('pag1', this)">🏠 Inicio</button>
+    <button class="nav-btn" onclick="openTab('pag2', this)">🔗 Links</button>
+    <button class="nav-btn" onclick="openTab('pag-link', this)">🐱 Zona Gatos</button>
+    <button class="nav-btn" onclick="openTab('pag-media', this)">🎬 Video & Audio</button>
+    <button class="nav-btn" onclick="openTab('pag-etiquetas', this)">📚 Etiquetas HTML</button>
+    <button class="nav-btn" onclick="openTab('pag-meses', this)">📅 Meses</button>
+    <button class="nav-btn" onclick="openTab('pag-horario', this)">🏫 Horario</button>
+    <button class="nav-btn js-tab" onclick="openTab('pag-js', this)">⚡ 10 Scripts JS</button>
+  </nav>
+
+  <div class="container">
+
+    <!-- 1. PÁGINA 1 (INICIO) -->
+    <section id="pag1" class="tab-section active">
+      <h2 class="section-title">MI PRIMERA PÁGINA 🐱</h2>
+      <p class="section-subtitle">¡VOY A PODER CON TODO! 🐾✨</p>
+
+      <div class="img-box">
+        <img class="cat-photo" src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=800&q=80" alt="Gatito tierno">
+      </div>
+
+      <h3 style="text-align:center; font-family:'Fredoka',sans-serif; color:var(--peach); margin-top:15px;">CREAR HIPERVÍNCULO</h3>
+      <div class="link-group">
+        <button class="link-pill" onclick="openTabById('pag1')">Ir a pág 1</button>
+        <button class="link-pill" onclick="openTabById('pag2')">Ir a pág 2</button>
+        <button class="link-pill" onclick="openTabById('pag-media')">Ver Multimedia</button>
+        <button class="link-pill" onclick="openTabById('pag-etiquetas')">Ver Etiquetas</button>
+        <button class="link-pill" onclick="openTabById('pag-horario')">Ver Horario</button>
+        <button class="link-pill" onclick="openTabById('pag-js')">Probar Scripts JS ⚡</button>
+      </div>
+    </section>
+
+    <!-- 2. PÁGINA 2 (LINKS) -->
+    <section id="pag2" class="tab-section">
+      <h2 class="section-title">Aprendiendo a usar links 🔗</h2>
+      <p class="section-subtitle">¡Navega por todas las secciones de manera rápida y divertida!</p>
+
+      <div class="img-box">
+        <img class="cat-photo" src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?auto=format&fit=crop&w=800&q=80" alt="Gatito naranja tierno">
+      </div>
+
+      <div class="link-group">
+        <button class="link-pill" onclick="openTabById('pag1')">Voy a pág principal</button>
+        <button class="link-pill" onclick="openTabById('pag-link')">Ver sección de gatos</button>
+        <button class="link-pill" onclick="openTabById('pag-meses')">Ver los meses</button>
+      </div>
+    </section>
+
+    <!-- 3. ZONA DE GATOS -->
+    <section id="pag-link" class="tab-section">
+      <h2 class="section-title">MI ZONA DE GATOS 😻</h2>
+      <p class="section-subtitle">¡Mucho amor felino, botones interactivos y enlaces funcionales!</p>
+
+      <div style="text-align:center; margin: 15px 0;">
+        <button class="btn-cute" onclick="miauAleatorio()">¡Click aquí, miau! 🐾</button>
+        <p id="fraseGato" style="margin-top:12px; font-weight:700; color:var(--pink-cute); min-height:24px;"></p>
+      </div>
+
+      <div class="img-box">
+        <img class="cat-photo" src="https://images.unsplash.com/photo-1533738363-b7f9aef128ce?auto=format&fit=crop&w=800&q=80" alt="Gatito curioso con lentes">
+      </div>
+
+      <div class="link-group">
+        <button class="link-pill" onclick="openTabById('pag1')">Voy a pág principal</button>
+        <button class="link-pill" onclick="openTabById('pag2')">Ir a pág 2</button>
+      </div>
+    </section>
+
+    <!-- 4. MULTIMEDIA (VIDEO & AUDIO) -->
+    <section id="pag-media" class="tab-section">
+      <h2 class="section-title">SECCIÓN DE MULTIMEDIA 🎬</h2>
+      <p class="section-subtitle">Video de gato y reproductor de audio integrados en HTML5.</p>
+
+      <div class="media-container">
+        <h3 style="font-family:'Fredoka',sans-serif; color:var(--peach);">🎥 Video de gato</h3>
+        <video controls width="560" height="315">
+          <source src="videoplayback.mp4" type="video/mp4">
+          Tu navegador no soporta la reproducción de video.
+        </video>
+
+        <h3 style="font-family:'Fredoka',sans-serif; color:var(--peach);">🎵 Reproductor de Audio</h3>
+        <audio controls>
+          <source src="WhatsApp Audio 2026-10-15 at 6.34.18 PM.mpeg" type="audio/mpeg">
+          Tu navegador no soporta el elemento de audio.
+        </audio>
+      </div>
+
+      <div class="explanation-box">
+        <h3>💡 ¿Cómo poner Audio y Video en HTML?</h3>
+        <p style="margin-bottom: 10px; font-weight: 600;">Para agregar contenido multimedia a tu página web sin programas externos, HTML5 ofrece dos etiquetas nativas muy sencillas:</p>
+        <ul>
+          <li>
+            <strong>Para Reproducir Audio (<code>&lt;audio&gt;</code>):</strong>
+            Usa la etiqueta <code>&lt;audio controls&gt;</code>. El atributo <code>controls</code> muestra los botones de Play, Pausa y Volumen. Dentro añades <code>&lt;source src="archivo.mp3" type="audio/mpeg"&gt;</code>.
+          </li>
+          <li>
+            <strong>Para Reproducir Video (<code>&lt;video&gt;</code> o <code>&lt;iframe&gt;</code>):</strong>
+            Si el video es un archivo local (ej. <code>videoplayback.mp4</code>), usa <code>&lt;video controls&gt;</code> con <code>width</code> y <code>height</code>. Si proviene de YouTube o Vimeo, se utiliza <code>&lt;iframe src="..."&gt;</code>.
+          </li>
+        </ul>
+      </div>
+
+      <div class="link-group">
+        <button class="link-pill" onclick="openTabById('pag1')">Volver a inicio</button>
+        <button class="link-pill" onclick="openTabById('pag-etiquetas')">Ver Etiquetas</button>
+      </div>
+    </section>
+
+    <!-- 5. GUÍA DE ETIQUETAS HTML (65+ ETIQUETAS CON BUSCADOR) -->
+    <section id="pag-etiquetas" class="tab-section">
+      <h2 class="section-title">GUÍA DE ETIQUETAS HTML 📚</h2>
+      <p class="section-subtitle">Sintaxis y explicación de tus 18 etiquetas solicitadas + 50 etiquetas esenciales.</p>
+
+      <input type="text" class="search-tags" id="buscadorEtiquetas" onkeyup="filtrarEtiquetas()" placeholder="🔍 Buscar etiqueta (ej. table, video, input, form)...">
+
+      <div class="tags-grid" id="gridEtiquetas">
+        <!-- 18 Solicitadas específicamente -->
+        <div class="tag-card"><code>&lt;p&gt;</code><p><strong>Párrafo:</strong> Define un bloque de texto general.<br><em>Sintaxis:</em> <code>&lt;p&gt;Texto&lt;/p&gt;</code></p></div>
+        <div class="tag-card"><code>&lt;li&gt;</code><p><strong>Elemento de lista:</strong> Define un ítem dentro de listas (&lt;ul&gt; o &lt;ol&gt;).<br><em>Sintaxis:</em> <code>&lt;li&gt;Elemento&lt;/li&gt;</code></p></div>
+        <div class="tag-card"><code>att (Atributo)</code><p><strong>Atributo:</strong> Propiedad dentro de etiquetas (ej: id, class).<br><em>Sintaxis:</em> <code>&lt;tag atributo="valor"&gt;</code></p></div>
+        <div class="tag-card"><code>&lt;h1&gt;</code><p><strong>Encabezado principal:</strong> Título más importante (H1 a H6).<br><em>Sintaxis:</em> <code>&lt;h1&gt;Título&lt;/h1&gt;</code></p></div>
+        <div class="tag-card"><code>&lt;head&gt;</code><p><strong>Cabecera oculta:</strong> Metadatos, título de pestaña y estilos.<br><em>Sintaxis:</em> <code>&lt;head&gt;...&lt;/head&gt;</code></p></div>
+        <div class="tag-card"><code>&lt;html&gt;</code><p><strong>Raíz HTML:</strong> Contenedor principal de todo el documento.<br><em>Sintaxis:</em> <code>&lt;html lang="es"&gt;...&lt;/html&gt;</code></p></div>
+        <div class="tag-card"><code>&lt;table&gt;</code><p><strong>Tabla:</strong> Contenedor para crear tablas de datos.<br><em>Sintaxis:</em> <code>&lt;table border="1"&gt;...&lt;/table&gt;</code></p></div>
+        <div class="tag-card"><code>&lt;br&gt;</code><p><strong>Salto de línea:</strong> Rompe la línea de texto actual.<br><em>Sintaxis:</em> <code>&lt;br&gt;</code></p></div>
+        <div class="tag-card"><code>&lt;img&gt;</code><p><strong>Imagen:</strong> Inserta una imagen multimedia.<br><em>Sintaxis:</em> <code>&lt;img src="foto.jpg" alt="texto"&gt;</code></p></div>
+        <div class="tag-card"><code>&lt;video&gt;</code><p><strong>Video:</strong> Reproductor de video nativo.<br><em>Sintaxis:</em> <code>&lt;video controls&gt;&lt;source src="v.mp4"&gt;&lt;/video&gt;</code></p></div>
+        <div class="tag-card"><code>&lt;audio&gt;</code><p><strong>Audio:</strong> Reproductor de sonido nativo.<br><em>Sintaxis:</em> <code>&lt;audio controls&gt;&lt;source src="a.mp3"&gt;&lt;/audio&gt;</code></p></div>
+        <div class="tag-card"><code>&lt;button&gt;</code><p><strong>Botón interactivo:</strong> Botón clickeable en formularios o páginas.<br><em>Sintaxis:</em> <code>&lt;button&gt;Click&lt;/button&gt;</code></p></div>
+        <div class="tag-card"><code>&lt;input&gt;</code><p><strong>Campo de entrada:</strong> Entradas de texto, botones, checkboxes.<br><em>Sintaxis:</em> <code>&lt;input type="text"&gt;</code></p></div>
+        <div class="tag-card"><code>&lt;select&gt;</code><p><strong>Menú desplegable:</strong> Lista de opciones seleccionables.<br><em>Sintaxis:</em> <code>&lt;select&gt;&lt;option&gt;Opción&lt;/option&gt;&lt;/select&gt;</code></p></div>
+        <div class="tag-card"><code>&lt;hr&gt;</code><p><strong>Línea horizontal:</strong> Separador visual de contenido.<br><em>Sintaxis:</em> <code>&lt;hr&gt;</code></p></div>
+        <div class="tag-card"><code>&lt;a&gt; (ir)</code><p><strong>Hipervínculo:</strong> Enlace para navegar a otras páginas o secciones.<br><em>Sintaxis:</em> <code>&lt;a href="url"&gt;Enlace&lt;/a&gt;</code></p></div>
+        <div class="tag-card"><code>&lt;label&gt;</code><p><strong>Etiqueta de formulario:</strong> Texto descriptivo para inputs.<br><em>Sintaxis:</em> <code>&lt;label&gt;Nombre:&lt;/label&gt;</code></p></div>
+        <div class="tag-card"><code>&lt;menu&gt;</code><p><strong>Menú de comandos:</strong> Lista de opciones o comandos interactivos.<br><em>Sintaxis:</em> <code>&lt;menu&gt;&lt;li&gt;Opción&lt;/li&gt;&lt;/menu&gt;</code></p></div>
+
+        <!-- 50 Etiquetas adicionales esenciales -->
+        <div class="tag-card"><code>&lt;!DOCTYPE html&gt;</code><p>Define la versión de HTML5.</p></div>
+        <div class="tag-card"><code>&lt;body&gt;</code><p>Cuerpo visible de la página.</p></div>
+        <div class="tag-card"><code>&lt;h2&gt; a &lt;h6&gt;</code><p>Encabezados secundarios.</p></div>
+        <div class="tag-card"><code>&lt;a&gt;</code><p>Ancla o enlace web.</p></div>
+        <div class="tag-card"><code>&lt;ul&gt;</code><p>Lista desordenada (con viñetas).</p></div>
+        <div class="tag-card"><code>&lt;ol&gt;</code><p>Lista ordenada (con números).</p></div>
+        <div class="tag-card"><code>&lt;div&gt;</code><p>Contenedor genérico en bloque.</p></div>
+        <div class="tag-card"><code>&lt;span&gt;</code><p>Contenedor genérico en línea.</p></div>
+        <div class="tag-card"><code>&lt;strong&gt;</code><p>Texto en negrita con importancia.</p></div>
+        <div class="tag-card"><code>&lt;em&gt;</code><p>Texto en cursiva con énfasis.</p></div>
+        <div class="tag-card"><code>&lt;b&gt;</code><p>Texto en negrita simple.</p></div>
+        <div class="tag-card"><code>&lt;i&gt;</code><p>Texto en cursiva simple.</p></div>
+        <div class="tag-card"><code>&lt;u&gt;</code><p>Texto subrayado.</p></div>
+        <div class="tag-card"><code>&lt;s&gt;</code><p>Texto tachado.</p></div>
+        <div class="tag-card"><code>&lt;code&gt;</code><p>Código fuente de computadora.</p></div>
+        <div class="tag-card"><code>&lt;pre&gt;</code><p>Texto preformateado (respeta espacios).</p></div>
+        <div class="tag-card"><code>&lt;blockquote&gt;</code><p>Cita larga en bloque.</p></div>
+        <div class="tag-card"><code>&lt;q&gt;</code><p>Cita corta en línea.</p></div>
+        <div class="tag-card"><code>&lt;mark&gt;</code><p>Texto resaltado (marcatextos).</p></div>
+        <div class="tag-card"><code>&lt;small&gt;</code><p>Texto pequeño (letra chica).</p></div>
+        <div class="tag-card"><code>&lt;sub&gt;</code><p>Texto subíndice (abajo).</p></div>
+        <div class="tag-card"><code>&lt;sup&gt;</code><p>Texto superíndice (arriba).</p></div>
+        <div class="tag-card"><code>&lt;tr&gt;</code><p>Fila de tabla.</p></div>
+        <div class="tag-card"><code>&lt;th&gt;</code><p>Celda de encabezado en tabla.</p></div>
+        <div class="tag-card"><code>&lt;td&gt;</code><p>Celda de datos en tabla.</p></div>
+        <div class="tag-card"><code>&lt;thead&gt;</code><p>Cabecera agrupada de tabla.</p></div>
+        <div class="tag-card"><code>&lt;tbody&gt;</code><p>Cuerpo agrupado de tabla.</p></div>
+        <div class="tag-card"><code>&lt;tfoot&gt;</code><p>Pie agrupado de tabla.</p></div>
+        <div class="tag-card"><code>&lt;form&gt;</code><p>Formulario de usuario.</p></div>
+        <div class="tag-card"><code>&lt;textarea&gt;</code><p>Caja de texto grande.</p></div>
+        <div class="tag-card"><code>&lt;option&gt;</code><p>Opción dentro de select.</p></div>
+        <div class="tag-card"><code>&lt;fieldset&gt;</code><p>Agrupador de campos de formulario.</p></div>
+        <div class="tag-card"><code>&lt;legend&gt;</code><p>Título para fieldset.</p></div>
+        <div class="tag-card"><code>&lt;header&gt;</code><p>Cabecera semántica de la página.</p></div>
+        <div class="tag-card"><code>&lt;footer&gt;</code><p>Pie de página semántico.</p></div>
+        <div class="tag-card"><code>&lt;nav&gt;</code><p>Sección de navegación.</p></div>
+        <div class="tag-card"><code>&lt;main&gt;</code><p>Contenido principal único.</p></div>
+        <div class="tag-card"><code>&lt;section&gt;</code><p>Sección temática general.</p></div>
+        <div class="tag-card"><code>&lt;article&gt;</code><p>Artículo de contenido independiente.</p></div>
+        <div class="tag-card"><code>&lt;aside&gt;</code><p>Contenido lateral o barra lateral.</p></div>
+        <div class="tag-card"><code>&lt;figure&gt;</code><p>Contenedor de elementos multimedia.</p></div>
+        <div class="tag-card"><code>&lt;figcaption&gt;</code><p>Leyenda o pie de figura.</p></div>
+        <div class="tag-card"><code>&lt;iframe&gt;</code><p>Marco flotante (incrustar webs o videos).</p></div>
+        <div class="tag-card"><code>&lt;canvas&gt;</code><p>Lienzo para gráficos por script.</p></div>
+        <div class="tag-card"><code>&lt;svg&gt;</code><p>Gráficos vectoriales escalables.</p></div>
+        <div class="tag-card"><code>&lt;meta&gt;</code><p>Metadatos del documento (charset, viewport).</p></div>
+        <div class="tag-card"><code>&lt;title&gt;</code><p>Título de la pestaña del navegador.</p></div>
+        <div class="tag-card"><code>&lt;link&gt;</code><p>Enlazar recursos externos (CSS, fuentes).</p></div>
+        <div class="tag-card"><code>&lt;script&gt;</code><p>Incrustar o enlazar código JavaScript.</p></div>
+        <div class="tag-card"><code>&lt;style&gt;</code><p>Incrustar hojas de estilo CSS.</p></div>
+      </div>
+    </section>
+
+    <!-- 6. MESES DEL AÑO -->
+    <section id="pag-meses" class="tab-section">
+      <h2 class="section-title">Meses del Año 🐱📅</h2>
+      <p class="section-subtitle">Lista interactiva de los 12 meses con temática felina.</p>
+      <ul class="months-list">
+        <li>❄️ Enero</li>
+        <li>💘 Febrero</li>
+        <li>🌸 Marzo</li>
+        <li>🌷 Abril</li>
+        <li>🌼 Mayo</li>
+        <li>☀️ Junio</li>
+        <li>🏖️ Julio</li>
+        <li>🌻 Agosto</li>
+        <li>🍂 Septiembre</li>
+        <li>🎃 Octubre</li>
+        <li>🍁 Noviembre</li>
+        <li>🎄 Diciembre</li>
+      </ul>
+    </section>
+
+    <!-- 7. HORARIO ESCOLAR -->
+    <section id="pag-horario" class="tab-section">
+      <h2 class="section-title">HORARIO PICHURRIENTO GATUNO 🏫🐾</h2>
+      <p class="section-subtitle">Organización semanal de clases.</p>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>HORAS</th>
+              <th>LUNES</th>
+              <th>MARTES</th>
+              <th>MIÉRCOLES</th>
+              <th>JUEVES</th>
+              <th>VIERNES</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>7-8</td>
+              <td rowspan="2">APLICACIONES DEL<br>PENSAMIENTO MATEMÁTICO</td>
+              <td rowspan="2">LA ENERGÍA EN<br>LOS PROCESOS DE<br>LA VIDA DIARIA</td>
+              <td>—</td>
+              <td rowspan="2">LA ENERGÍA EN<br>LOS PROCESOS DE<br>LA VIDA DIARIA</td>
+              <td>ÁMBITO DE FORMACIÓN<br>SOCIOEMOCIONAL V:<br>ACTIVIDADES ARTÍSTICAS</td>
+            </tr>
+            <tr>
+              <td>8-9</td>
+              <td rowspan="2">IMPLEMENTA<br>APLICACIONES WEB</td>
+              <td rowspan="2">CONSTRUYE<br>APLICACIONES WEB</td>
+            </tr>
+            <tr>
+              <td>9-10</td>
+              <td>TEMAS SELECTOS<br>DE MATEMÁTICAS II</td>
+              <td>CONCIENCIA HISTÓRICA II:<br>MÉXICO EXPANSIONISMO</td>
+              <td rowspan="2">CONCIENCIA HISTÓRICA II:<br>MÉXICO EXPANSIONISMO</td>
+            </tr>
+            <tr>
+              <td>10-11</td>
+              <td rowspan="2">CONSTRUYE<br>APLICACIONES WEB</td>
+              <td>IMPLEMENTA<br>APLICACIONES WEB</td>
+              <td rowspan="2">INGLÉS V</td>
+              <td rowspan="2">IMPLEMENTA<br>APLICACIONES WEB</td>
+            </tr>
+            <tr>
+              <td>11-12</td>
+              <td rowspan="3">CONSTRUYE<br>APLICACIONES WEB</td>
+              <td>APLICACIONES DEL<br>PENSAMIENTO MATEMÁTICO</td>
+            </tr>
+            <tr>
+              <td>12-13</td>
+              <td rowspan="2">INGLÉS V</td>
+              <td rowspan="2">TEMAS SELECTOS<br>DE MATEMÁTICAS II</td>
+              <td>ÁMBITO DE FORMACIÓN<br>SOCIOEMOCIONAL V</td>
+              <td rowspan="2">TEMAS SELECTOS<br>DE MATEMÁTICAS II</td>
+            </tr>
+            <tr>
+              <td>13-14</td>
+              <td>INGLÉS V</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 8. LOS 10 PROGRAMAS JAVASCRIPT INTERACTIVOS -->
+    <section id="pag-js" class="tab-section">
+      <h2 class="section-title">Laboratorio JavaScript Gatuno ⚡🐱</h2>
+      <p class="section-subtitle">Tus 10 archivos JS integrados y listos para ejecutarse con un clic.</p>
+
+      <div class="js-grid">
+
+        <!-- 1. agregardatos.html -->
+        <div class="js-card">
+          <div>
+            <div class="js-card-header">
+              <h3>agregardatos.html</h3>
+              <span>🐱</span>
+            </div>
+            <p class="js-desc">Confirmación con <code>confirm()</code> y captura de datos personales con <code>prompt()</code>.</p>
+            <div class="js-output" id="out-agregardatos">Presiona ejecutar para registrar tus datos...</div>
+          </div>
+          <button class="btn-js" onclick="ejecutarAgregarDatos()">Ejecutar agregardatos.html</button>
+        </div>
+
+        <!-- 2. aprobaste.html -->
+        <div class="js-card">
+          <div>
+            <div class="js-card-header">
+              <h3>aprobaste.html</h3>
+              <span>🎓</span>
+            </div>
+            <p class="js-desc">Evalúa si la calificación final ingresada es mayor o igual a 6 para aprobar.</p>
+            <div class="js-output" id="out-aprobaste">Esperando calificación final...</div>
+          </div>
+          <button class="btn-js" onclick="ejecutarAprobaste()">Ejecutar aprobaste.html</button>
+        </div>
+
+        <!-- 3. clas.html -->
+        <div class="js-card">
+          <div>
+            <div class="js-card-header">
+              <h3>clas.html</h3>
+              <span>🐾</span>
+            </div>
+            <p class="js-desc">Manipulación de texto y colores usando <code>getElementById()</code> y <code>querySelector()</code>.</p>
+            <div class="js-output" id="out-clas">
+              <p id="prueba"></p>
+              <p id="ejemplo"></p>
+              <p id="texto">Soy bien listo</p>
+              <p id="textos">Soy bien crak</p>
+            </div>
+          </div>
+          <button class="btn-js" onclick="ejecutarClas()">Ejecutar clas.html</button>
+        </div>
+
+        <!-- 4. DOM.html -->
+        <div class="js-card">
+          <div>
+            <div class="js-card-header">
+              <h3>DOM.html</h3>
+              <span>🐈</span>
+            </div>
+            <p class="js-desc">Ejemplo del Document Object Model cambiando el color de un encabezado con <code>getElementById()</code>.</p>
+            <div class="js-output" id="out-dom">
+              <h4 id="demo" style="margin-bottom:4px;">The Document Object</h4>
+              <small>The getElementById() Method</small>
+            </div>
+          </div>
+          <button class="btn-js" onclick="ejecutarDOM()">Ejecutar DOM.html</button>
+        </div>
+
+        <!-- 5. operaciones.html -->
+        <div class="js-card">
+          <div>
+            <div class="js-card-header">
+              <h3>operaciones.html</h3>
+              <span>➕</span>
+            </div>
+            <p class="js-desc">Calcula suma, resta, multiplicación y división de dos números al mismo tiempo.</p>
+            <div class="js-output" id="out-operaciones">Listo para calcular las 4 operaciones...</div>
+          </div>
+          <button class="btn-js" onclick="ejecutarOperaciones()">Ejecutar operaciones.html</button>
+        </div>
+
+        <!-- 6. operacionesSwitch.html -->
+        <div class="js-card">
+          <div>
+            <div class="js-card-header">
+              <h3>operacionesSwitch.html</h3>
+              <span>🎛️</span>
+            </div>
+            <p class="js-desc">Menú interactivo con estructura <code>switch</code> y validación de división entre cero.</p>
+            <div class="js-output" id="out-switch">Elige una operación del 1 al 4...</div>
+          </div>
+          <button class="btn-js" onclick="ejecutarOperacionesSwitch()">Ejecutar operacionesSwitch.html</button>
+        </div>
+
+        <!-- 7. promedio.html -->
+        <div class="js-card">
+          <div>
+            <div class="js-card-header">
+              <h3>promedio.html</h3>
+              <span>📊</span>
+            </div>
+            <p class="js-desc">Solicita tres calificaciones decimales y calcula su promedio aritmético.</p>
+            <div class="js-output" id="out-promedio">Esperando las 3 calificaciones...</div>
+          </div>
+          <button class="btn-js" onclick="ejecutarPromedio()">Ejecutar promedio.html</button>
+        </div>
+
+        <!-- 8. signoZodiacal.html -->
+        <div class="js-card">
+          <div>
+            <div class="js-card-header">
+              <h3>signoZodiacal.html</h3>
+              <span>✨</span>
+            </div>
+            <p class="js-desc">Analiza tu fecha de nacimiento (DD/MM/AA) con <code>split("/")</code> y calcula tu signo.</p>
+            <div class="js-output" id="out-zodiaco">Ingresa tu fecha de nacimiento...</div>
+          </div>
+          <button class="btn-js" onclick="ejecutarSignoZodiacal()">Ejecutar signoZodiacal.html</button>
+        </div>
+
+        <!-- 9. voto.html -->
+        <div class="js-card">
+          <div>
+            <div class="js-card-header">
+              <h3>voto.html</h3>
+              <span>🗳️</span>
+            </div>
+            <p class="js-desc">Verifica mediante condicional <code>if/else</code> si tienes mayoría de edad (18+) para votar.</p>
+            <div class="js-output" id="out-voto">Esperando edad del ciudadano...</div>
+          </div>
+          <button class="btn-js" onclick="ejecutarVoto()">Ejecutar voto.html</button>
+        </div>
+
+        <!-- 10. datos.html -->
+        <div class="js-card">
+          <div>
+            <div class="js-card-header">
+              <h3>datos.html</h3>
+              <span>🪪</span>
+            </div>
+            <p class="js-desc">Captura directa de nombre, edad, especialidad y dirección para mostrar ficha resumen.</p>
+            <div class="js-output" id="out-datos">Presiona ejecutar para llenar tu ficha...</div>
+          </div>
+          <button class="btn-js" onclick="ejecutarDatos()">Ejecutar datos.html</button>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+  <footer>
+    Hecho con mucho cariño felino 🐾 • HTML5, CSS3 y JavaScript unidos en un solo archivo
+  </footer>
+
+  <script>
+    // 1. Generar huellitas y corazones flotantes en el fondo
+    const floatingBg = document.getElementById('floatingBg');
+    const iconos = ['🐾', '🐱', '💖', '🐟', '🧶'];
+    for (let i = 0; i < 18; i++) {
+      const el = document.createElement('div');
+      el.className = 'floater';
+      el.textContent = iconos[i % iconos.length];
+      el.style.left = Math.random() * 100 + 'vw';
+      el.style.animationDuration = (11 + Math.random() * 12) + 's';
+      el.style.animationDelay = (-Math.random() * 14) + 's';
+      floatingBg.appendChild(el);
+    }
+
+    // 2. Navegación entre pestañas
+    function openTab(tabId, btnElement) {
+      document.querySelectorAll('.tab-section').forEach(sec => sec.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      if (btnElement) btnElement.classList.add('active');
+    }
+
+    function openTabById(tabId) {
+      document.querySelectorAll('.tab-section').forEach(sec => sec.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('onclick').includes(`'${tabId}'`));
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // 3. Interacción con el gatito mascota
+    const maullidos = [
+      '¡Miau! Purrr 💕',
+      '¡Gracias por acariciarme! 🐾',
+      '¡Eres el mejor programador! 😻',
+      '¡Dame un pescadito! 🐟',
+      '¡Miau miau feliz! ✨'
+    ];
+    function acariciarGato() {
+      const bubble = document.getElementById('meowBubble');
+      bubble.textContent = maullidos[Math.floor(Math.random() * maullidos.length)];
+      bubble.classList.add('show');
+      setTimeout(() => bubble.classList.remove('show'), 2200);
+    }
+
+    // Frase aleatoria en Zona Gatos
+    function miauAleatorio() {
+      const frases = [
+        '🐱 "Un hogar sin un gato es solo una casa."',
+        '🐾 "¡Purrrr! Has desbloqueado +100 puntos de ternura gatuna."',
+        '🧶 "¡Hora de jugar con la bola de estambre!"',
+        '😻 "El michi aprueba tu código HTML y JavaScript."'
+      ];
+      document.getElementById('fraseGato').textContent = frases[Math.floor(Math.random() * frases.length)];
+    }
+
+    // 4. Buscador en tiempo real para las etiquetas HTML
+    function filtrarEtiquetas() {
+      const filtro = document.getElementById('buscadorEtiquetas').value.toLowerCase();
+      const tarjetas = document.querySelectorAll('#gridEtiquetas .tag-card');
+      tarjetas.forEach(card => {
+        const texto = card.textContent.toLowerCase();
+        card.style.display = texto.includes(filtro) ? 'block' : 'none';
+      });
+    }
+
+    /* =========================================================
+       TUS 10 PROGRAMAS JAVASCRIPT ORIGINALES
+    ========================================================= */
+
+    // 1. agregardatos.html
+    function ejecutarAgregarDatos() {
+      const continuar = confirm('¿Desea registrar tus datos?');
+      const out = document.getElementById('out-agregardatos');
+      if (continuar) {
+        let nombre = prompt('Escribe tu nombre');
+        let espe = prompt('Escribe tu especialidad');
+        let edad = prompt('Escribe tu edad');
+        let direccion = prompt('Escribe tu direccion');
+        let email = prompt('Escribe tu correo electronico');
+
+        let mensaje = "Tu nombre es: " + nombre +
+          "\nTu especialidad es: " + espe +
+          "\nTienes: " + edad + " años" +
+          "\nTu direccion es: " + direccion +
+          "\nTu correo es: " + email;
+
+        alert(mensaje);
+        out.textContent = mensaje;
+      } else {
+        alert('Tengo flojera');
+        out.textContent = 'Tengo flojera 😿';
+      }
+    }
+
+    // 2. aprobaste.html
+    function ejecutarAprobaste() {
+      let cali = prompt("Ingresa tu calificacion final");
+      const out = document.getElementById('out-aprobaste');
+      if (cali >= 6) {
+        alert("Aprobaste");
+        out.textContent = "Calificación: " + cali + " → Aprobaste 😻";
+      } else {
+        alert("Reprobaste por flojo");
+        out.textContent = "Calificación: " + cali + " → Reprobaste por flojo 😿";
+      }
+    }
+
+    // 3. clas.html
+    function ejecutarClas() {
+      let elemento = document.getElementById("prueba");
+      elemento.innerHTML = "Aprendiendo metodos de javaScript";
+
+      var prueba = document.getElementById("ejemplo");
+      prueba.innerHTML = "Soy  flojo";
+
+      let texto = document.querySelector("#texto");
+      texto.style.color = "#2d6a4f";
+
+      let text = document.querySelector("#textos");
+      text.style.color = "#d6336c";
+    }
+
+    // 4. DOM.html
+    function ejecutarDOM() {
+      let elemento = document.getElementById("demo");
+      elemento.style.color = "#e63946";
+    }
+
+    // 5. operaciones.html
+    function ejecutarOperaciones() {
+      let N1 = Number(prompt('Introduce el primer numero'));
+      let N2 = Number(prompt('Introduce el segundo numero'));
+      let suma = N1 + N2;
+      let resta = N1 - N2;
+      let multi = N1 * N2;
+      let division = N1 / N2;
+
+      let res = "La suma es: " + suma +
+        "\nLa resta es: " + resta +
+        "\nLa multiplicacion es: " + multi +
+        "\nLa division es: " + division;
+
+      alert(res);
+      document.getElementById('out-operaciones').textContent = res;
+    }
+
+    // 6. operacionesSwitch.html
+    function ejecutarOperacionesSwitch() {
+      let opcion = parseInt(prompt(
+        "¿Qué operación deseas realizar?" +
+        "\n1. Suma " +
+        "\n2. Resta " +
+        "\n3. Multiplicación " +
+        "\n4. División"
+      ));
+      let n1 = parseFloat(prompt("Ingresa el primer número:"));
+      let n2 = parseFloat(prompt("Ingresa el segundo número:"));
+      let resultado;
+      let textoSalida = "";
+
+      switch (opcion) {
+        case 1:
+          resultado = n1 + n2;
+          textoSalida = "La suma es: " + resultado;
+          break;
+        case 2:
+          resultado = n1 - n2;
+          textoSalida = "La resta es: " + resultado;
+          break;
+        case 3:
+          resultado = n1 * n2;
+          textoSalida = "La multiplicación es: " + resultado;
+          break;
+        case 4:
+          if (n2 != 0) {
+            resultado = n1 / n2;
+            textoSalida = "La división es: " + resultado;
+          } else {
+            textoSalida = "No se puede dividir entre cero";
+          }
+          break;
+        default:
+          textoSalida = "Opción no válida";
+          break;
+      }
+      alert(textoSalida);
+      document.getElementById('out-switch').textContent = textoSalida;
+    }
+
+    // 7. promedio.html
+    function ejecutarPromedio() {
+      let cali1 = parseFloat(prompt("Ingresa tu primer calificacion"));
+      let cali2 = parseFloat(prompt("Ingresa tu segunda calificacion"));
+      let cali3 = parseFloat(prompt("Ingresa tu tercera calificacion"));
+      let promedio = (cali1 + cali2 + cali3) / 3;
+
+      let msg = "Tu promedio es de: " + promedio;
+      alert(msg);
+      document.getElementById('out-promedio').textContent = msg;
+    }
+
+    // 8. signoZodiacal.html
+    function ejecutarSignoZodiacal() {
+      let fecha = prompt("Ingresa tu fecha de nacimiento (DD/MM/AA):");
+      if (!fecha) return;
+      let datos = fecha.split("/");
+      let dia = parseInt(datos[0]);
+      let mes = parseInt(datos[1]);
+      let signo = "";
+
+      switch (mes) {
+        case 1: signo = dia <= 19 ? "Capricornio" : "Acuario"; break;
+        case 2: signo = dia <= 18 ? "Acuario" : "Piscis"; break;
+        case 3: signo = dia <= 20 ? "Piscis" : "Aries"; break;
+        case 4: signo = dia <= 19 ? "Aries" : "Tauro"; break;
+        case 5: signo = dia <= 20 ? "Tauro" : "Géminis"; break;
+        case 6: signo = dia <= 20 ? "Géminis" : "Cáncer"; break;
+        case 7: signo = dia <= 22 ? "Cáncer" : "Leo"; break;
+        case 8: signo = dia <= 22 ? "Leo" : "Virgo"; break;
+        case 9: signo = dia <= 22 ? "Virgo" : "Libra"; break;
+        case 10: signo = dia <= 22 ? "Libra" : "Escorpio"; break;
+        case 11: signo = dia <= 21 ? "Escorpio" : "Sagitario"; break;
+        case 12: signo = dia <= 21 ? "Sagitario" : "Capricornio"; break;
+        default: signo = "Fecha no válida";
+      }
+      let msg = "Tu signo zodiacal es: " + signo;
+      alert(msg);
+      document.getElementById('out-zodiaco').textContent = msg;
+    }
+
+    // 9. voto.html
+    function ejecutarVoto() {
+      let edad = prompt("Ingresa tu edad");
+      const out = document.getElementById('out-voto');
+      if (edad >= 18) {
+        alert("Puedes votar");
+        out.textContent = "Edad: " + edad + " → Puedes votar ✅";
+      } else {
+        alert("No puedes votar");
+        out.textContent = "Edad: " + edad + " → No puedes votar ❌";
+      }
+    }
+
+    // 10. datos.html
+    function ejecutarDatos() {
+      let nombre = prompt("¿Cual es tu nombre?");
+      let edad = prompt("¿Cual es tu edad?");
+      let especialidad = prompt("¿Cual es tu especialidad?");
+      let direccion = prompt("Escribe tu direccion");
+
+      let msg = "Tu nombre es: " + nombre +
+        "\nTu especialidad es: " + especialidad +
+        "\nTienes: " + edad + " años" +
+        "\nTu direccion es: " + direccion;
+
+      alert(msg);
+      document.getElementById('out-datos').textContent = msg;
+    }
+  </script>
+</body>
+</html>
